@@ -14,7 +14,7 @@ import java.util.List;
         // the default is STRING
         discriminatorType = DiscriminatorType.STRING,
         length = 2)
-public class Account {
+public abstract class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
