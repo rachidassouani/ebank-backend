@@ -24,7 +24,7 @@ public abstract class Account {
     private AccountStatus accountStatus;
     @ManyToOne
     private Customer customer;
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<AccountOperation> accountOperations = new ArrayList<>();
 
     public Long getId() {
