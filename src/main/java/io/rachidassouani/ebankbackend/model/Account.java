@@ -20,6 +20,7 @@ public class Account {
     private Long id;
     private double balance;
     private LocalDate createdAt;
+    @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
     @ManyToOne
     private Customer customer;
