@@ -11,6 +11,8 @@ public class AccountOperation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double amount;
+
+    private String description;
     @Enumerated(EnumType.STRING)
     private OperationType operationType;
     private LocalDate date;
@@ -55,5 +57,13 @@ public class AccountOperation {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
