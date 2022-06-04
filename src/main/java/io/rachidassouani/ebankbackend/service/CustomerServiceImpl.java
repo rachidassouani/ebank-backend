@@ -1,6 +1,8 @@
 package io.rachidassouani.ebankbackend.service;
 
 import io.rachidassouani.ebankbackend.dao.CustomerRepository;
+import io.rachidassouani.ebankbackend.dto.CustomerDTO;
+import io.rachidassouani.ebankbackend.mapper.CustomerMapperImpl;
 import io.rachidassouani.ebankbackend.model.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,17 +10,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
     private CustomerRepository customerRepository;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    private CustomerMapperImpl customerMapper;
+
+    public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapperImpl customerMapper) {
         this.customerRepository = customerRepository;
+        this.customerMapper = customerMapper;
     }
 
     @Override
@@ -29,8 +34,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> findAll() {
+    public List<CustomerDTO> findAll() {
         LOGGER.info("finding list of customers ...");
-        return customerRepository.findAll();
+        List<Customer> customerList = customerRepository.findAll();
+        List<CustomerDTO> customerDTOS = customerList.stream().map(customer -> customerMapper.fromCustomer(customer)).collect(Collectors.toList());
+        return customerDTOS;
     }
 }
