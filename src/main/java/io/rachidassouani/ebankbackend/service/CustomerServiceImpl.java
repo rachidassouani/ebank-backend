@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
     private CustomerRepository customerRepository;
-
     private CustomerMapperImpl customerMapper;
 
     public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapperImpl customerMapper) {
@@ -29,10 +29,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer save(Customer customer) {
+    public CustomerDTO save(CustomerDTO customerDTO) {
         LOGGER.info("Saving new customer ...");
-        Customer savedCustomer = customerRepository.save(customer);
-        return savedCustomer;
+        // casting the customerDTO to customer
+        Customer customerToSave = customerMapper.fromCustomerDTO(customerDTO);
+        // saving customer
+        Customer savedCustomer = customerRepository.save(customerToSave);
+        // casting saved customer to customerDTO
+        return customerMapper.fromCustomer(savedCustomer);
     }
 
     @Override
