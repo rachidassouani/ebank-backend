@@ -10,4 +10,5 @@ public interface CustomerService {
     CustomerDTO save(CustomerDTO customerDTO);
     List<CustomerDTO> findAll();
     CustomerDTO findCustomerDTO(long customerId) throws CustomerNotFoundException;
+    void delete(long customerId) throws CustomerNotFoundException;
 }

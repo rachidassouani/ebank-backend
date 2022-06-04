@@ -54,4 +54,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerMapper.fromCustomer(customer);
     }
+
+    @Override
+    public void delete(long customerId) throws CustomerNotFoundException {
+        CustomerDTO customerDTO = findCustomerDTO(customerId);
+        customerRepository.deleteById(customerDTO.getId());
+    }
 }
