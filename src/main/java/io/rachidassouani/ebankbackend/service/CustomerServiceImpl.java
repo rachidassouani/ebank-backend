@@ -20,8 +20,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
-    private CustomerRepository customerRepository;
-    private CustomerMapperImpl customerMapper;
+    private final CustomerRepository customerRepository;
+    private final CustomerMapperImpl customerMapper;
 
     public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapperImpl customerMapper) {
         this.customerRepository = customerRepository;
