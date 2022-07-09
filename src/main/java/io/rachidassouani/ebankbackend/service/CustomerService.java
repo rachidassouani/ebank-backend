@@ -11,4 +11,5 @@ public interface CustomerService {
     List<CustomerDTO> findAll();
     CustomerDTO findCustomerDTO(long customerId) throws CustomerNotFoundException;
     void delete(long customerId) throws CustomerNotFoundException;
+    List<CustomerDTO> findCustomerDTOsByName(String name) throws CustomerNotFoundException;
 }

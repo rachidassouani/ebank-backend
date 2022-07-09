@@ -19,5 +19,5 @@ public interface AccountService {
     SavingAccountDTO saveSavingAccount(long customerId, double initBalance, double interestRate) throws CustomerNotFoundException;
     void debit(long accountId, double amount, String description) throws AccountNotFoundException, BalanceNotSufficientException;
     void credit(long accountId, double amount, String description) throws AccountNotFoundException, BalanceNotSufficientException;
-    void transfer(long accountIdSource, long accountIdDestination, double amount) throws AccountNotFoundException, BalanceNotSufficientException;
+    void transfer(long accountIdSource, long accountIdDestination, double amount, String description) throws AccountNotFoundException, BalanceNotSufficientException;
 }

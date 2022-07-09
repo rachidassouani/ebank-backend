@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findAccount(long accountId) throws AccountNotFoundException {
-        LOGGER.info("finding account by its ID ..");
+        LOGGER.info("finding account by its ID .."+ accountId);
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new AccountNotFoundException(Constant.ACCOUNT_ID_NOT_EXIST));
 
@@ -151,12 +151,13 @@ public class AccountServiceImpl implements AccountService {
         accountOperation.setAccount(account);
         accountOperation.setDescription(description);
         accountOperation.setOperationType(OperationType.DEBIT);
+        accountOperation.setAmount(amount);
         accountOperation.setDate(LocalDate.now());
         accountOperationRepository.save(accountOperation);
     }
 
     @Override
-    public void credit(long accountId, double amount, String description) throws AccountNotFoundException, BalanceNotSufficientException {
+    public void credit(long accountId, double amount, String description) throws AccountNotFoundException {
         Account account = findAccount(accountId);
 
         // update the balance of the account
@@ -168,13 +169,14 @@ public class AccountServiceImpl implements AccountService {
         accountOperation.setAccount(account);
         accountOperation.setDescription(description);
         accountOperation.setOperationType(OperationType.CREDIT);
+        accountOperation.setAmount(amount);
         accountOperation.setDate(LocalDate.now());
         accountOperationRepository.save(accountOperation);
     }
 
     @Override
-    public void transfer(long accountIdSource, long accountIdDestination, double amount) throws AccountNotFoundException, BalanceNotSufficientException {
-        debit(accountIdSource, amount, Constant.TRANSFER);
-        credit(accountIdDestination, amount, Constant.TRANSFER);
+    public void transfer(long accountIdSource, long accountIdDestination, double amount, String description) throws AccountNotFoundException, BalanceNotSufficientException {
+        debit(accountIdSource, amount, description);
+        credit(accountIdDestination, amount, description);
     }
 }

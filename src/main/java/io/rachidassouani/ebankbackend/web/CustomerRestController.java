@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/customers")
+@CrossOrigin("*")
 public class CustomerRestController {
 
     private final CustomerService customerService;
@@ -35,5 +36,10 @@ public class CustomerRestController {
     @DeleteMapping("{customerId}")
     public void deleteCustomer(@PathVariable("customerId") long customerId) throws CustomerNotFoundException {
         customerService.delete(customerId);
+    }
+
+    @GetMapping("search")
+    public List<CustomerDTO> findCustomersByName(@RequestParam(value = "name", defaultValue = "") String name) throws CustomerNotFoundException {
+        return customerService.findCustomerDTOsByName(name);
     }
 }

@@ -60,4 +60,11 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerDTO customerDTO = findCustomerDTO(customerId);
         customerRepository.deleteById(customerDTO.getId());
     }
+
+    @Override
+    public List<CustomerDTO> findCustomerDTOsByName(String name) throws CustomerNotFoundException {
+        List<Customer> customers = customerRepository.findByNameContains(name);
+        List<CustomerDTO> customerDTOS = customers.stream().map(customer -> customerMapper.fromCustomer(customer)).collect(Collectors.toList());
+        return customerDTOS;
+    }
 }
